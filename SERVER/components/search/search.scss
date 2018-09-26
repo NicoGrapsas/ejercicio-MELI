@@ -1,0 +1,50 @@
+@import '../../lib/vars.scss';
+
+$logo_height: 35px;
+$search_radius: 3px;
+
+.search-container {
+    * {
+        height: $logo_height;
+    }
+    display: flex;
+    height: $nav_height;
+    padding: $fluid_padding;
+    align-items: center;
+    background-color: $yellow;
+}
+
+.site-logo {
+    margin-right: 20px;
+}
+
+.search-form {
+    display: flex;
+    width: 100%;
+    align-content: center;
+}
+
+.search-input {
+    width: 100%;
+    padding-left: 10px;
+    padding-right: 45px;
+    font-size: 18px;
+    border: 1px solid white;
+    border-radius: $search_radius;
+}
+
+.search-input::placeholder {
+    color: $grey3;
+}
+
+.search-input-addon {
+    width: $logo_height;
+    margin-left: -$logo_height;
+    background: url('/static/images/ic_Search@2x.png');
+    background-repeat: no-repeat;
+    background-size: 20px 20px;
+    background-position: center center;
+    background-color: $grey1;
+    border-radius: 0 $search_radius $search_radius 0;
+    cursor: pointer;
+}

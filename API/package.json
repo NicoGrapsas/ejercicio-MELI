@@ -1,0 +1,14 @@
+{
+  "name": "api-ml",
+  "version": "0.0.1",
+  "description": "Consumes MELI API and returns formatted data.",
+  "main": "app.js",
+  "scripts": {},
+  "author": "NicoGrapsas",
+  "license": "MIT",
+  "dependencies": {
+    "cors": "^2.8.4",
+    "express": "^4.16.3",
+    "unirest": "^0.5.1"
+  }
+}

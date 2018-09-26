@@ -1,0 +1,24 @@
+@import './vars.scss';
+
+* { box-sizing: border-box; }
+html, body { 
+    height: 100%; 
+    margin: 0; 
+    padding: 0; 
+}
+
+#app {
+    height: 100%;
+}
+
+.content {
+    padding: $fluid_padding;
+    height: calc(100% - $nav_height);
+    background-color: $grey1;
+}
+
+.results {
+    display: flex;
+    flex-direction: column;
+    padding-bottom: 48px;
+}

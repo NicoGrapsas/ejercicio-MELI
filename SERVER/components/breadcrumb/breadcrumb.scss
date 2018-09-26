@@ -1,0 +1,16 @@
+@import '../../lib/vars.scss';
+
+.breadcrumb {
+    margin: 0;
+    padding: 16px 0;
+    font-size: 14px;
+    list-style: none;
+    .breadcrumb-item { 
+        display: inline-block;  
+        color: $grey2;
+        margin-right: 5px;
+    }
+    .breadcrumb-item::after { content: " >" }
+    .breadcrumb-item:last-child { color: $grey3; font-weight: bold; }
+    .breadcrumb-item:last-child::after { content: '' }
+}
