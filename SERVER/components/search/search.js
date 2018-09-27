@@ -2,8 +2,6 @@ import { Component } from 'react';
 import {connect} from 'react-redux';
 import Link from 'next/link';
 
-import { fetchResults } from "../../store";
-
 import './search.scss';
 
 class Search extends Component {
@@ -11,8 +9,8 @@ class Search extends Component {
     render() {
         return (
             <nav className="search-container">
-                <Link href="/">
-                    <a href="#">
+                <Link href="/" shallow>
+                    <a>
                         <img 
                             className="site-logo" 
                             src="/static/images/Logo_ML.png"
@@ -24,7 +22,7 @@ class Search extends Component {
                 <form action="#" className="search-form" onSubmit={(e) => this.props.handleSubmit(e)}>
                     <input type="text" className="search-input" 
                         placeholder={this.props.placeholder} 
-                        value={this.props.value} 
+                        defaultValue={this.props.value} 
                     />
                     <i className="search-input-addon" ></i>
                 </form>

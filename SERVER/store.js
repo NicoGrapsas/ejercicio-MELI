@@ -4,6 +4,7 @@ import thunkMiddleware from 'redux-thunk'
 import 'isomorphic-unfetch';
 
 const initialState = {
+	view: '',
 	search: '',
 	isFetching: false,
 	results: {},
@@ -11,10 +12,11 @@ const initialState = {
 }
 
 export const actionTypes = {
+	SHOW_VIEW: 'SHOW_VIEW',
 	SEARCH_REQUEST: 'SEARCH_REQUEST',
 	SEARCH_RECEIVE: 'SEARCH_RECEIVE',
 	PRODUCT_REQUEST: 'PRODUCT_REQUEST',
-	PRODUCT_RECEIVE: 'PRODUCT_RECEIVE'
+	PRODUCT_RECEIVE: 'PRODUCT_RECEIVE',
 }
 
 // REDUCERS
@@ -28,6 +30,8 @@ export const reducer = (state = initialState, action) => {
 			return {...state, isFetching: true}
 		case actionTypes.PRODUCT_RECEIVE:
 			return {...state, isFetching: false, product: action.product}
+		case actionTypes.SHOW_VIEW:
+			return {...state, view: action.view }
 		default: return state
 	}
 }
@@ -42,17 +46,19 @@ export const receiveResults = (response) => async (dispatch, getState) => {
 	let results = await response.json();
 	let { search } = getState();
 	await dispatch({ type: actionTypes.SEARCH_RECEIVE, results });
+	await dispatch({ type: actionTypes.SHOW_VIEW, view: 'results' });
 }
 
 export const fetchProduct = (pid) => async dispatch => {
 	dispatch({ type: actionTypes.PRODUCT_REQUEST, pid });
 	let response = await fetch('http://localhost:8080/api/items/'+pid);
-	dispatch(receiveProduct(response));
+	await dispatch(receiveProduct(response));
 }
 
 export const receiveProduct = (response) => async dispatch => {
 	let product = await response.json();
-	dispatch({ type: actionTypes.PRODUCT_RECEIVE, product });
+	await dispatch({ type: actionTypes.PRODUCT_RECEIVE, product });
+	await dispatch({ type: actionTypes.SHOW_VIEW, view: 'product' });
 }
 
 export function initializeStore (initialState = initialState) {

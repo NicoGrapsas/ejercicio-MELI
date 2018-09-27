@@ -13,6 +13,7 @@ html, body {
 
 .content {
     padding: $fluid_padding;
+    padding-bottom: 48px;
     height: calc(100% - $nav_height);
     background-color: $grey1;
 }
@@ -20,5 +21,4 @@ html, body {
 .results {
     display: flex;
     flex-direction: column;
-    padding-bottom: 48px;
 }

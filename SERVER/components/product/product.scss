@@ -1,0 +1,54 @@
+@import '../../lib/vars.scss';
+
+.product-container {
+    display: flex;
+    flex-direction: row;
+    background-color: white;
+}
+
+.product-description-container {
+    flex: 3;
+    margin-left: 32px;
+    margin-bottom: 32px;
+    .product-description-title {
+        font-size: 28px;
+        margin: 0 0 32px 0;
+    }
+}
+
+.product-details {
+
+    margin-top: 32px;
+
+    .product-title {
+        margin: 0px 0 32px 0;
+        font-size: 24px;
+        width: 70%;
+    }
+
+    .product-condition {
+        margin-top: 0px;
+        font-size: 14px;
+    }
+
+    .product-price {
+        font-size: 46px;
+        margin-bottom: 32px;
+    }
+
+    .product-decimals {
+        font-size: 32px;
+    }
+
+    .product-buy {
+        display: flex;
+        height: 36px;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        margin-right: 32px;
+        border-radius: 3px;
+        background-color: $blue;
+        cursor: pointer;
+    }
+}

@@ -1,48 +1,79 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import { fetchResults } from "../store";
+import { fetchResults, fetchProduct } from "../store";
 import router from 'next/router';
+import { matchPath } from 'react-router';
 
 import Search from '../components/search/search';
 import Breadcrumb from '../components/breadcrumb/breadcrumb';
 import Result from '../components/result/result';
+import Product from '../components/product/product';
 
 import '../lib/layout.scss';
 
 class Index extends React.Component {
 
   static async getInitialProps ({ req, reduxStore }) {
-    if ('search' in req.query) {
+    const search = matchPath(req.path, { path: '/items', exact:true })
+    const product = matchPath(req.path, { path: '/items/:id', exact: true })
+    if (search && 'search' in req.query) {
       await reduxStore.dispatch(fetchResults(req.query.search));
+    } else if (product) {
+      await reduxStore.dispatch(fetchProduct(product.params.id));
     }
+
     return {}
   }
 
-  async handleSubmit(e) {
+  async goToResults(e) {
     e.preventDefault();
+
     const search = e.target[0].value;
+    if (!search) { return }
+    
     const { dispatch } = this.props;
     await dispatch(fetchResults(search));
+    
     router.push({
       pathname: '/',
       query: { search }
-    }, 'items?search='+search, {
+    }, '/items?search='+search, {
       shallow: true
-    })
+    });
+  }
+
+  async goToProduct(e, pid) {
+    e.preventDefault();
+
+    const { dispatch } = this.props;
+    await dispatch(fetchProduct(pid));
+
+    router.push(
+      { pathname: '/' }, 
+      '/items/'+pid, 
+      { shallow: true }
+    )
   }
 
   render () {
-    const { router, items } = this.props;
+    const { view, items, search, product } = this.props;
     return (
       <div>
-        <Search handleSubmit={(e) => { this.handleSubmit(e) }} />
+        <Search 
+          value={search}
+          placeholder="Nunca dejes de buscar"
+          handleSubmit={(e) => { this.goToResults(e) }} 
+        />
         <div className="content">
           <Breadcrumb/>
-          <div className="results">
-            { items && items.map((item, i) =>
-              <Result key={i} {...item} />
-            ) }
-          </div>
+          { view == 'product' && <Product {...product} /> }
+          { view == 'results' && 
+            <div className="results">
+              { items && items.map((item, i) =>
+                <Result key={i} {...item} onClick={(e, pid) => { this.goToProduct(e, pid); }}/>
+              ) }
+            </div>
+          }
         </div>
       </div>
     )
@@ -50,9 +81,8 @@ class Index extends React.Component {
 }
 
 function mapStateToProps(state) {
-  const { results } = state
-  const items = results.items;
-  return { items };
+  const { view, search, results, product } = state
+  return { view, search, items: results.items, product: product.item };
 }
 
-export default connect(mapStateToProps)(Index)
+export default connect(mapStateToProps)(Index);

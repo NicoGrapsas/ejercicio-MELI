@@ -1,10 +1,15 @@
+import Link from 'next/link';
+
 import './result.scss';
 
-const Result = ({ picture, price, free_shipping, title  }) =>  {
+const Result = ({ id, picture, price, free_shipping, title, onClick  }) =>  {
+    const itemURL = `/items/${id}`;
     return (
         <div className="result-container">
             <div className="result">
-                <img src={picture} alt="" className="result-image"/>
+                    <a href={itemURL} onClick={(e) => { onClick(e, id) }}>
+                        <img src={picture} alt="" className="result-image"/>
+                    </a>
                 <div className="result-details">
                     <div className="result-price">
                         ${ price.amount }
@@ -16,7 +21,7 @@ const Result = ({ picture, price, free_shipping, title  }) =>  {
                             /> 
                         }
                     </div>
-                    <a href="#" className="result-title">{ title }</a>
+                    <a className="result-title" href={itemURL} onClick={(e) => onClick(e, id)}>{ title }</a>
                     <span className="result-location"> Capital Federal </span>
                 </div>
             </div>

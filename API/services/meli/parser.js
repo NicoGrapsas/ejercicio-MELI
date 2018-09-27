@@ -3,6 +3,18 @@ var author = {
      lastname: 'Grapsas'
 }
 
+function parseDecimals(number) {
+    let n_str = number.toString();
+    let decimals = (n_str.indexOf('.') >= 0);
+
+    if (!decimals) { return { amount: number, decimals: 00 } }
+    else {
+        n_arr = n_str.split('.');
+        return { amount: parseInt(n_arr[0]), decimals: parseInt(n_arr[1]) }
+    }
+}
+
+
 function parseThumbnail(url) {
     return url.replace('-I.jpg', '-O.jpg');
 }
@@ -20,13 +32,14 @@ function parseItems(results) {
     if (!results.length) { return items }
     
     results.map(item => {
+        let { amount, decimals } = parseDecimals(item.price);
         items.push({
             id: item.id,
             title: item.title,
             price: {
                 currency: item.currency_id,
-                amount: item.price,
-                decimals: 2
+                amount,
+                decimals
             },
             picture: parseThumbnail(item.thumbnail),
             condition: item.condition,
