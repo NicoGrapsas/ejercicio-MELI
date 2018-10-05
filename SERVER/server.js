@@ -9,7 +9,7 @@ app.prepare()
 .then(() => {
   const server = express()
 
-  server.get(['/', '/items'], (req, res) => {
+  server.get(['/', '/items', '/items/:id'], (req, res) => {
     return app.render(req, res, '/', req.params);
   })
 
