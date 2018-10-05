@@ -8,6 +8,7 @@
 
 .product-description-container {
     flex: 3;
+    margin-top: 32px;
     margin-left: 32px;
     margin-bottom: 32px;
     .product-description-title {
@@ -17,9 +18,7 @@
 }
 
 .product-details {
-
     margin-top: 32px;
-
     .product-title {
         margin: 0px 0 32px 0;
         font-size: 24px;

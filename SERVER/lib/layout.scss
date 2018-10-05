@@ -1,10 +1,22 @@
 @import './vars.scss';
 
-* { box-sizing: border-box; }
+@font-face {
+    font-family: "Proxima Nova";
+    src: url("https://http2.mlstatic.com/ui/webfonts/v3.0.0/proxima-nova/proximanova-regular.woff2") format("woff2"), url("https://http2.mlstatic.com/ui/webfonts/v3.0.0/proxima-nova/proximanova-regular.woff") format("woff"), url("https://http2.mlstatic.com/ui/webfonts/v3.0.0/proxima-nova/proximanova-regular.ttf") format("truetype");
+}
+
+* { 
+    box-sizing: border-box;
+    font-family: "Proxima Nova",-apple-system,"Helvetica Neue",Helvetica,Roboto,Arial,sans-serif
+}
 html, body { 
     height: 100%; 
     margin: 0; 
     padding: 0; 
+}
+
+body {
+    background-color: $grey1;
 }
 
 #app {

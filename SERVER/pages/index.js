@@ -1,6 +1,6 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import { fetchResults, fetchProduct } from "../store";
+import { fetchResults, fetchProduct, setSearch, setView } from "../store";
 import router from 'next/router';
 import { matchPath } from 'react-router';
 
@@ -14,15 +14,35 @@ import '../lib/layout.scss';
 class Index extends React.Component {
 
   static async getInitialProps ({ req, reduxStore }) {
-    const search = matchPath(req.path, { path: '/items', exact:true })
-    const product = matchPath(req.path, { path: '/items/:id', exact: true })
-    if (search && 'search' in req.query) {
-      await reduxStore.dispatch(fetchResults(req.query.search));
-    } else if (product) {
-      await reduxStore.dispatch(fetchProduct(product.params.id));
+    if (req) {
+      const search = matchPath(req.path, { path: '/items', exact:true });
+      const product = matchPath(req.path, { path: '/items/:id', exact: true });
+      
+      if (search && 'search' in req.query) {
+        await reduxStore.dispatch(fetchResults(req.query.search));
+      } else if (product) {
+        await reduxStore.dispatch(fetchProduct(product.params.id));
+      }
     }
+    
+    
 
     return {}
+  }
+
+  async goToIndex(e) { 
+    e.preventDefault();
+
+    const { dispatch } = this.props;
+    router.push({ 
+      pathname: '/' 
+    }, 
+    '/', { 
+      shallow: true
+    });
+
+    dispatch(setView('search'));
+    dispatch(setSearch(''));
   }
 
   async goToResults(e) {
@@ -35,7 +55,7 @@ class Index extends React.Component {
     await dispatch(fetchResults(search));
     
     router.push({
-      pathname: '/',
+      pathname: '/items?search='+search,
       query: { search }
     }, '/items?search='+search, {
       shallow: true
@@ -49,7 +69,7 @@ class Index extends React.Component {
     await dispatch(fetchProduct(pid));
 
     router.push(
-      { pathname: '/' }, 
+      { pathname: '/items/'+pid }, 
       '/items/'+pid, 
       { shallow: true }
     )
@@ -62,10 +82,11 @@ class Index extends React.Component {
         <Search 
           value={search}
           placeholder="Nunca dejes de buscar"
-          handleSubmit={(e) => { this.goToResults(e) }} 
+          handleSubmit={(e) => { this.goToResults(e) }}
+          handleIndex = { (e) => { this.goToIndex(e) } } 
         />
         <div className="content">
-          <Breadcrumb/>
+          { view == 'product' || view == 'results' && <Breadcrumb/>  }
           { view == 'product' && <Product {...product} /> }
           { view == 'results' && 
             <div className="results">

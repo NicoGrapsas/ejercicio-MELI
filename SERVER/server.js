@@ -9,9 +9,13 @@ app.prepare()
 .then(() => {
   const server = express()
 
-  server.get('*', (req, res) => {
+  server.get(['/', '/items'], (req, res) => {
     return app.render(req, res, '/', req.params);
   })
+
+  server.get("*", (req, res) => {
+    return handle(req, res);
+  });
 
   server.listen(3000, (err) => {
     if (err) throw err

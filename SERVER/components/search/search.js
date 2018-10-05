@@ -9,8 +9,7 @@ class Search extends Component {
     render() {
         return (
             <nav className="search-container">
-                <Link href="/" shallow>
-                    <a>
+                    <a onClick={e => this.props.handleIndex(e) }>
                         <img 
                             className="site-logo" 
                             src="/static/images/Logo_ML.png"
@@ -18,7 +17,6 @@ class Search extends Component {
                             alt=""
                         />
                     </a>
-                </Link>
                 <form action="#" className="search-form" onSubmit={(e) => this.props.handleSubmit(e)}>
                     <input type="text" className="search-input" 
                         placeholder={this.props.placeholder} 
