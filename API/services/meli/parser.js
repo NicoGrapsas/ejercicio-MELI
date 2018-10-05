@@ -14,15 +14,22 @@ function parseDecimals(number) {
     }
 }
 
-
+/**
+ * Modifies image filename for higher resolution.
+ * @param {string} url 
+ */
 function parseThumbnail(url) {
     return url.replace('-I.jpg', '-O.jpg');
 }
 
 function parseBreadcrumb(data) {
     let categories = [];
-    if (!data.filters.length) { return categories }
-    data.filters[0].values[0].path_from_root.map(level => categories.push(level.name));
+    
+    // FROM SEARCH API
+    if (data.filters.length) { 
+        data.filters[0].values[0].path_from_root.map(level => categories.push(level.name)); 
+    }
+
     return categories;
 }
 

@@ -25,8 +25,6 @@ class Index extends React.Component {
       }
     }
     
-    
-
     return {}
   }
 

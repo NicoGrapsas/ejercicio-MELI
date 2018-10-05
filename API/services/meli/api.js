@@ -6,7 +6,7 @@ const ROOT_URL = 'https://api.mercadolibre.com';
 const API = {
     search: function (query) { return ['/sites/MLA/search', {q: query, limit: 4}] },
     item: function (id) { return `/items/${id}` },
-    itemDescription: function(id) { return this.item(id) + '/description' }
+    itemDescription: function(id) { return this.item(id) + '/description' },
 }
 
 function get(path, params=null) {
@@ -32,8 +32,9 @@ async function item(id) {
 
     let _item = await get(path);
     let _itemDescription = await itemDescription(id);
-    
+
     return parser.parseItem(_item, _itemDescription);
+
 }
 
 async function itemDescription(id) {

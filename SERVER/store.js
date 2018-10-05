@@ -53,14 +53,14 @@ export const fetchResults = (query) => async dispatch => {
 	await dispatch(receiveResults(response));
 }
 
-export const receiveResults = (response) => async (dispatch, getState) => {
+export const receiveResults = (response) => async dispatch => {
 	let results = await response.json();
-	let { search } = getState();
 	await dispatch({ type: actionTypes.SEARCH_RECEIVE, results });
 	await dispatch({ type: actionTypes.SET_VIEW, view: 'results' });
 }
 
 export const fetchProduct = (pid) => async dispatch => {
+	let state =  getState();
 	dispatch({ type: actionTypes.PRODUCT_REQUEST, pid });
 	let response = await fetch('http://localhost:8080/api/items/'+pid);
 	await dispatch(receiveProduct(response));
