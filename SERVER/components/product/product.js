@@ -14,7 +14,7 @@ const Product = ({id, title, price, picture, condition, free_shipping, sold_quan
                 <p className="product-condition">{ condition == 'new' ? 'Nuevo' : 'Usado'  }{ ` - ${sold_quantity} vendidos` }</p>
                 <p className="product-title">{title}</p>
                 <div className="product-price">
-                    $ { price.amount }
+                    $ { price.amount.toLocaleString() }
                     <sup className="product-decimals">
                         { price.decimals.toString().length == 1 ? price.decimals + '0' : price.decimals  }
                     </sup>

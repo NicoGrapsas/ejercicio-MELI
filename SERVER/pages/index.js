@@ -28,6 +28,10 @@ class Index extends React.Component {
     return {}
   }
 
+  handleHistory({ state }) {
+    window.location.href = state.as;
+  }
+
   async goToIndex(e) { 
     e.preventDefault();
 
@@ -53,7 +57,7 @@ class Index extends React.Component {
     await dispatch(fetchResults(search));
     
     router.push({
-      pathname: '/items?search='+search,
+      pathname: '/',
       query: { search }
     }, '/items?search='+search, {
       shallow: true
@@ -67,10 +71,14 @@ class Index extends React.Component {
     await dispatch(fetchProduct(pid));
 
     router.push(
-      { pathname: '/items/'+pid }, 
+      { pathname: '/' }, 
       '/items/'+pid, 
       { shallow: true }
     )
+  }
+
+  componentDidMount() {
+    window.addEventListener('popstate', (e) => this.handleHistory(e));
   }
 
   render () {
@@ -81,7 +89,7 @@ class Index extends React.Component {
           value={search}
           placeholder="Nunca dejes de buscar"
           handleSubmit={(e) => { this.goToResults(e) }}
-          handleIndex = { (e) => { this.goToIndex(e) } } 
+          handleIndex = { (e) => { this.goToIndex(e) } }
         />
         <div className="content">
           { (view == 'product' || view == 'results') && <Breadcrumb/>  }
@@ -100,8 +108,8 @@ class Index extends React.Component {
 }
 
 function mapStateToProps(state) {
-  const { view, search, results, product } = state
-  return { view, search, items: results.items, product: product.item };
+  const { view, search, results, product, isFetching } = state
+  return { view, search, items: results.items, product: product.item, isFetching };
 }
 
 export default connect(mapStateToProps)(Index);

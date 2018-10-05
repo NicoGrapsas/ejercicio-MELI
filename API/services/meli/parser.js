@@ -18,8 +18,20 @@ function parseDecimals(number) {
  * Modifies image filename for higher resolution.
  * @param {string} url 
  */
-function parseThumbnail(url) {
-    return url.replace('-I.jpg', '-B.jpg');
+function parseThumbnail(url, res) {
+    let newUrl = ''
+    switch (res) {
+        case 800:
+            newUrl = url.replace('-I.jpg', '-B.jpg');
+            break;
+        case 200:
+            newUrl = url.replace('-I.jpg', '-N.jpg');
+            break;
+        default:
+            newUrl = url;
+            break;
+    }
+    return newUrl;
 }
 
 function parseBreadcrumb(data) {
@@ -38,7 +50,7 @@ function parseBreadcrumb(data) {
     return categories;
 }
 
-function parseItems(results) {
+function parseItems(results, res=200) {
     items = []
     
     if (!results.length) { return items }
@@ -53,7 +65,7 @@ function parseItems(results) {
                 amount,
                 decimals
             },
-            picture: parseThumbnail(item.thumbnail),
+            picture: parseThumbnail(item.thumbnail, res),
             condition: item.condition,
             free_shipping: item.shipping.free_shipping
         })
@@ -73,7 +85,7 @@ function parseSearch(data) {
 
 function parseItem(_item, itemDescription, categories=false) {
 
-    let [item] = parseItems([_item])
+    let [item] = parseItems([_item], 800);
     item.sold_quantity = _item.sold_quantity;
     item.description = itemDescription.plain_text;
     if (categories) { 

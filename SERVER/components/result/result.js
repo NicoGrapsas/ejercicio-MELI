@@ -12,7 +12,7 @@ const Result = ({ id, picture, price, free_shipping, title, onClick  }) =>  {
                     </a>
                 <div className="result-details">
                     <div className="result-price">
-                        ${ price.amount }
+                        ${ price.amount.toLocaleString() }
                         { free_shipping && 
                             <img className="result-shipping"
                                 alt=""
