@@ -7,7 +7,7 @@
 }
 
 .product-description-container {
-    flex: 3;
+    flex: 2;
     margin-top: 32px;
     margin-left: 32px;
     margin-bottom: 32px;
@@ -17,7 +17,13 @@
     }
 }
 
+.product-image {
+    width: 100%;
+    max-width: 680px;
+}
+
 .product-details {
+    flex: 2;
     margin-top: 32px;
     .product-title {
         margin: 0px 0 32px 0;
@@ -50,4 +56,26 @@
         background-color: $blue;
         cursor: pointer;
     }
+}
+
+@media screen and (max-width: 500px) {
+    
+    .product-container {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .product-details .product-title {
+        width: 100%;
+        margin: 32px;
+    }
+
+    .product-description-container {
+        margin: 32px;
+    }
+
+    .product-buy {
+        margin: 32px;
+    }
+
 }

@@ -19,7 +19,7 @@ function parseDecimals(number) {
  * @param {string} url 
  */
 function parseThumbnail(url) {
-    return url.replace('-I.jpg', '-O.jpg');
+    return url.replace('-I.jpg', '-B.jpg');
 }
 
 function parseBreadcrumb(data) {

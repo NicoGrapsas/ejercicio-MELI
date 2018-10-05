@@ -13,8 +13,8 @@
 
 .result-image {
     display: inline-block;
-    height: 284px;
-    width: 284px;
+    width: 100%;
+    max-width: 180px;
     margin-bottom: 16px;
     margin-right: 16px;
     cursor: pointer;
@@ -23,7 +23,7 @@
 .result-details {
     position: relative;
     margin-top: 50px;
-    width: calc(100% - 316px);
+    width: calc(100% - 216px);
     vertical-align: top;
 }
 
@@ -49,4 +49,27 @@
     top: 32px;
     right: 50px;    
     font-size: 12px;
+}
+
+@media screen and (max-width: 800px) {
+    
+    .result-location {
+        left: 0px;
+    }
+
+}
+
+@media screen and (max-width: 500px) {
+
+    .result-image {
+        width: 100%;
+        max-width: none;
+    }
+    
+    .result-details {
+        width: 100%;
+        margin-top: 0;
+        margin-bottom: 32px;
+    }
+
 }
