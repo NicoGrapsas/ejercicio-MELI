@@ -25,8 +25,13 @@ function parseThumbnail(url) {
 function parseBreadcrumb(data) {
     let categories = [];
     
+    // FROM CATEGORIES API
+    if (data.path_from_root && data.path_from_root.length) {
+        data.path_from_root.map(level => categories.push(level.name));    
+    }
+
     // FROM SEARCH API
-    if (data.filters.length) { 
+    if (data.filters && data.filters.length) { 
         data.filters[0].values[0].path_from_root.map(level => categories.push(level.name)); 
     }
 
@@ -66,11 +71,14 @@ function parseSearch(data) {
     }
 }
 
-function parseItem(_item, itemDescription) {
+function parseItem(_item, itemDescription, categories=false) {
 
     let [item] = parseItems([_item])
     item.sold_quantity = _item.sold_quantity;
     item.description = itemDescription.plain_text;
+    if (categories) { 
+        item.categories = parseBreadcrumb(categories); 
+    }
 
     return {
         author,

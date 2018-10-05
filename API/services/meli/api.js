@@ -5,6 +5,7 @@ const ROOT_URL = 'https://api.mercadolibre.com';
 
 const API = {
     search: function (query) { return ['/sites/MLA/search', {q: query, limit: 4}] },
+    categories: function(id) { return `/categories/${id}`; },
     item: function (id) { return `/items/${id}` },
     itemDescription: function(id) { return this.item(id) + '/description' },
 }
@@ -27,18 +28,29 @@ async function search(query) {
     return parser.parseSearch(res);
 }
 
-async function item(id) {
+async function item(id, withCategories=false) {
     let path = API.item(id);
 
+    let _categories = false;
     let _item = await get(path);
     let _itemDescription = await itemDescription(id);
 
-    return parser.parseItem(_item, _itemDescription);
+    if (withCategories) {
+        _categories = await categories(_item.category_id); 
+    }
+
+    return parser.parseItem(_item, _itemDescription, _categories);
 
 }
 
 async function itemDescription(id) {
     let path = API.itemDescription(id);
+    let res = await get(path);
+    return res;
+}
+
+async function categories(id) {
+    let path = API.categories(id);
     let res = await get(path);
     return res;
 }

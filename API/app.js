@@ -13,7 +13,7 @@ app.get('/', function(req, res){
 
 app.get('/api/items(/:id)?', function(req, res) {
     if (req.query.q) { MELI.search(req.query.q).then(json => res.send(json)); }
-    if (req.params.id) { MELI.item(req.params.id).then(json => res.send(json)) }
+    if (req.params.id) { MELI.item(req.params.id, req.query.withCategories).then(json => res.send(json)) }
 });
 
 app.listen(PORT, function() {

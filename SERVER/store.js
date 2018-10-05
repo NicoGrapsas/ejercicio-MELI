@@ -60,7 +60,6 @@ export const receiveResults = (response) => async dispatch => {
 }
 
 export const fetchProduct = (pid) => async dispatch => {
-	let state =  getState();
 	dispatch({ type: actionTypes.PRODUCT_REQUEST, pid });
 	let response = await fetch('http://localhost:8080/api/items/'+pid);
 	await dispatch(receiveProduct(response));
