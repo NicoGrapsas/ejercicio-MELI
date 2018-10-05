@@ -84,7 +84,7 @@ class Index extends React.Component {
           handleIndex = { (e) => { this.goToIndex(e) } } 
         />
         <div className="content">
-          { view == 'product' || view == 'results' && <Breadcrumb/>  }
+          { (view == 'product' || view == 'results') && <Breadcrumb/>  }
           { view == 'product' && <Product {...product} /> }
           { view == 'results' && 
             <div className="results">

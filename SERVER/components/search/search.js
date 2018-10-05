@@ -9,7 +9,7 @@ class Search extends Component {
     render() {
         return (
             <nav className="search-container">
-                    <a onClick={e => this.props.handleIndex(e) }>
+                    <a className="site-logo-link" onClick={e => this.props.handleIndex(e) }>
                         <img 
                             className="site-logo" 
                             src="/static/images/Logo_ML.png"
